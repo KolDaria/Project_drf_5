@@ -4,19 +4,17 @@ from celery import shared_task
 from django.core.mail import send_mail
 from django.utils import timezone
 
-from config.settings import EMAIL_HOST_USER
 from habits.models import Habit
 from habits.services import send_telegram_message
-from users.models import User
 
 
 @shared_task
-def send_reminder_habit_time(email):
+def send_reminder_habit_time():
     now = timezone.now()
     now_time = now.time()
     today = now.date()
 
-    habits = Habit.objects.all()
+    habits = Habit.objects.filter(owner__tg_chat_id__isnull=False)
 
     for habit in habits:
         last_execution_date = habit.last_execution_date
@@ -30,7 +28,5 @@ def send_reminder_habit_time(email):
             habit_time = habit.time
             if habit_time.hour == now_time.hour and habit_time.minute == now_time.minute:
                 message = f"Напоминание: Пора выполнить привычку '{habit.action}' в {habit.place}!"
-                send_mail("Напоминание", message, EMAIL_HOST_USER, [email])
-                user = User.objects.get(email=email)
-                if user.tg_chat_id:
-                    send_telegram_message(user.tg_chat_id, message)
+                user = habit.owner
+                send_telegram_message(user.tg_chat_id, message)
