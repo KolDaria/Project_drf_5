@@ -3,7 +3,6 @@ name = "project-drf-5"
 version = "0.1.0"
 description = ""
 authors = ["Daria Kolisnyk <dashamel17@gmail.com>"]
-readme = "README.md"
 package-mode = false
 
 [tool.poetry.dependencies]
