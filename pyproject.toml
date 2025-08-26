@@ -3,10 +3,10 @@ name = "project-drf-5"
 version = "0.1.0"
 description = ""
 authors = ["Daria Kolisnyk <dashamel17@gmail.com>"]
-readme = "README.md"
+package-mode = false
 
 [tool.poetry.dependencies]
-python = "^3.13"
+python = ">=3.12,<3.14"
 django = "^5.2.4"
 djangorestframework = "^3.16.0"
 djangorestframework-simplejwt = "^5.5.1"
@@ -21,6 +21,9 @@ django-celery-beat = "^2.8.1"
 pillow = "^11.3.0"
 django-filter = "^25.1"
 coverage = "^7.10.2"
+redis = "^6.4.0"
+gunicorn = "^23.0.0"
+django-redis = "^6.0.0"
 
 
 [tool.poetry.group.lint.dependencies]
@@ -28,6 +31,11 @@ flake8 = "^7.3.0"
 mypy = "^1.17.1"
 isort = "^6.0.1"
 black = "^25.1.0"
+
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.4.1"
+pytest-cov = "^6.2.1"
 
 [build-system]
 requires = ["poetry-core"]
